@@ -19,31 +19,22 @@ apply plugin: 'eclipse'
 apply plugin: 'spring-boot'
 
 jar {
-	baseName = 'springboot-starter'
-	version = '0.0.1-SNAPSHOT'
+	manifest {
+		attributes 'Implementation-Title': 'Application Jar',
+				'Implementation-Version': 1.0,
+				'Built-By': System.getProperty('user.name'),
+				'Built-Date': new Date(),
+				'Built-JDK': System.getProperty('java.version'),
+				'Main-Class': 'com.springboot.application.Application'
+	}
+	baseName = project.name + '-all'
 }
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
 
-
-task fatJar(type: Jar) {
-    manifest {
-        attributes 'Implementation-Title': 'Application Jar',
-                'Implementation-Version': 1.0,
-                'Built-By': System.getProperty('user.name'),
-                'Built-Date': new Date(),
-                'Built-JDK': System.getProperty('java.version'),
-                'Main-Class': 'com.springboot.andrei.Application'
-    }
-    exclude 'META-INF/*.RSA', 'META-INF/*.SF','META-INF/*.DSA'
-
-    baseName = project.name + '-all'
-    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
-    with jar
-
+springBoot {
+    executable = true
 }
-
-
 
 repositories {
     jcenter()
