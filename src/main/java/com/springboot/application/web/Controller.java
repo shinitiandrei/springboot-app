@@ -4,6 +4,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Controller
 class SampleController {
 
@@ -16,7 +19,9 @@ class SampleController {
     @RequestMapping("/home")
     @ResponseBody
     public String rest() {
-        return "Accessing Home and Java directory: " + System.getenv("JAVA_HOME");
+        ProcessBuilder processBuilder = new ProcessBuilder();
+        Map<String, String> variables = processBuilder.environment();
+        return "Accessing Home and Environment directories: " + variables;
     }
 
 }
